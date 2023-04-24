@@ -1,4 +1,4 @@
-export interface Item {
+interface Item {
     id: string,
     item: string,
     checked: boolean
