@@ -1,40 +1,46 @@
-import './css/style.css';
-import FullList from './model/FullList';
-import ListItem from './model/ListItem';
-import ListTemplate from './templates/ListTemplate';
+import "./css/style.css";
+import FullList from "./model/FullList";
+import ListItem from "./model/ListItem";
+import ListTemplate from "./templates/ListTemplate";
 
 const initApp = (): void => {
-    const fullList = FullList.instance
-    const template = ListTemplate.instance
+  const fullList = FullList.instance;
+  const template = ListTemplate.instance;
 
-    const itemEntryForm = document.getElementById('itemEntryForm') as HTMLFormElement;
+  const itemEntryForm = document.getElementById(
+    "itemEntryForm"
+  ) as HTMLFormElement;
 
-    itemEntryForm.addEventListener('submit', (event: SubmitEvent): void => {
-        event.preventDefault()
+  itemEntryForm.addEventListener("submit", (event: SubmitEvent): void => {
+    event.preventDefault();
 
-        const input = document.getElementById("newItem") as HTMLInputElement;
-        const newEntryText = input.value.trim();
+    const input = document.getElementById("newItem") as HTMLInputElement;
+    const newEntryText = input.value.trim();
 
-        if (!newEntryText.length) return;
+    if (!newEntryText.length) return;
 
-        const itemId: number = fullList.list.length ? parseInt(fullList.list[fullList.list.length - 1].id) + 1 : 1
+    const itemId: number = fullList.list.length
+      ? parseInt(fullList.list[fullList.list.length - 1].id) + 1
+      : 1;
 
-        const newItem = new ListItem(itemId.toString(), newEntryText)
+    const newItem = new ListItem(itemId.toString(), newEntryText);
 
-        fullList.addItem(newItem)
+    fullList.addItem(newItem);
 
-        template.render(fullList)
-    })
+    template.render(fullList);
+  });
 
-    const clearItems = document.getElementById("clearItemsButton") as HTMLButtonElement;
+  const clearItems = document.getElementById(
+    "clearItemsButton"
+  ) as HTMLButtonElement;
 
-    clearItems.addEventListener('click', (): void => {
-        fullList.clearList()
-        template.clear()
-    })
+  clearItems.addEventListener("click", (): void => {
+    fullList.clearList();
+    template.clear();
+  });
 
-    fullList.load()
-    template.render(fullList)
-}
+  fullList.load();
+  template.render(fullList);
+};
 
 document.addEventListener("DOMContentLoaded", initApp);
